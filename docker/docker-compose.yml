@@ -1,0 +1,23 @@
+version: '3'
+services:
+  airflow-webserver:
+    image: airflow_custom
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+    command: webserver
+
+  airflow-scheduler:
+    image: airflow_custom
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./dags:/opt/airflow/dags
+    command: scheduler
